@@ -13,7 +13,6 @@ source .venv/bin/activate
 python -m pip install --upgrade pip
 pip install -r requirement.txt
 
-cd .venv
 npm create vite@latest frontend -- --template svelte
 cd frontend
 npm install
@@ -69,3 +68,26 @@ else
 fi 
 
 '''
+##alembic 설치 db 생성
+설치후
+alembic init migrations
+
+/ 하위에 migrations 라는 디렉토리와 alembic.ini 파일이 생성된다.
+migrations 디렉토리는 alembic 도구를 사용할 때 생성되는 리비전 파일들을
+저장하는 용도로 사용되고 alembic.ini파일은 alembic 환경파일 설정이다.
+
+alembic을 이용하여 테이블을 생성 또는 변경할 때마다 파일이 생성되는데 
+이 작업 파일을 리비전 파일이라고 한다. 그리고 이리비전 파일은 
+migrations 디렉토리에 저장된다
+
+/alembic.ini 수정
+
+sqlalchemy.url = sqlite:///./myapi.db
+
+/migrations/env.py 수정
+
+import models
+target_metadata = models.Base.metadata
+
+alembic revision --autogenerate 실행
+alembic upgrade head
