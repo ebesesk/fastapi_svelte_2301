@@ -1,19 +1,12 @@
 <script>
-  let question_list = []
+  import Router from 'svelte-spa-router'
+  import Home from "./routes/Home.svelte"
+  import Detail from "./routes/Detail.svelte"
 
-  function get_question_list() {
-    fetch("https://ya2301.ebesesk.synology.me/api/question/list").then((response) => {
-      response.json().then((json) => {
-        question_list = json
-      })
-    })
+  const routes = {
+    '/': Home,
+    '/detail/:question_id': Detail,
   }
-
-  get_question_list()
 </script>
 
-<ul>
-  {#each question_list as question}
-    <li>{question.subject}</li>    
-  {/each}
-</ul>
+<Router {routes}/>
