@@ -1,6 +1,9 @@
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 
+from domain.question import question_router
+
+
 app = FastAPI()
 
 origins = [
@@ -28,10 +31,12 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+app.include_router(question_router.router)
 
-@app.get("/hello")
-async def hello():
-    return {"message": "안녕하세요 파이보"}
+
+# @app.get("/hello")
+# async def hello():
+#     return {"message": "안녕하세요 파이보"}
 
 
 # uvicorn main:app --reload --host 0.0.0.0 --port 7443

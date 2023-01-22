@@ -91,3 +91,18 @@ target_metadata = models.Base.metadata
 
 alembic revision --autogenerate 실행
 alembic upgrade head
+
+-----------------------------------------
+
+#db commit close 반복작업 자동수행 의존성주입(Dependency Injection)
+import contextlib
+
+
+@contextlib.contextmanager
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+
